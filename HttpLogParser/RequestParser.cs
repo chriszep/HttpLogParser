@@ -3,9 +3,9 @@ using System.Net;
 
 namespace HttpLogParser
 {
-    public static class LogEntryParser
+    public static class RequestParser
     {
-        public static LogEntry Parse(string input)
+        public static Request Parse(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
             {
@@ -16,10 +16,10 @@ namespace HttpLogParser
 
             if (segments.Length < 7)
             {
-                throw new FormatException("Log entry has invalid format");
+                throw new FormatException("Request has invalid format");
             }
 
-            return new LogEntry
+            return new Request
             {
                 // Use IPAddress.Parse to ensure IP address is valid
                 IPAddress = IPAddress.Parse(segments[0]).ToString(),

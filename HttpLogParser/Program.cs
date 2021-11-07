@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -14,14 +15,15 @@ namespace HttpLogParser
 
             var logLines = await ReadLogFileLines(filePath);
 
+            var requests = new List<Request>();
+
             foreach (var line in logLines)
             {
-                var logEntry = LogEntryParser.Parse(line);
-
-                Console.WriteLine();
-                Console.WriteLine($"IP address: {logEntry.IPAddress}");
-                Console.WriteLine($"URL: {logEntry.Url}");
+                requests.Add(RequestParser.Parse(line));
             }
+
+            var log = new Log(requests);
+            WriteReport(log);
         }
 
         private static async Task<string[]> ReadLogFileLines(string logFilePath)
@@ -30,6 +32,7 @@ namespace HttpLogParser
             {
                 var logLines = await File.ReadAllLinesAsync(logFilePath);
                 Console.WriteLine($"Read log file '{logFilePath}'");
+                Console.WriteLine();
                 return logLines;
             }
             catch
@@ -37,6 +40,19 @@ namespace HttpLogParser
                 Console.Error.WriteLine($"Error reading log file: {logFilePath}");
                 return new string[0];
             }
+        }
+
+        private static void WriteReport(Log log)
+        {
+            var reporter = new Reporter(log);
+
+            Console.WriteLine($"Number of unique IP addresses: {reporter.CountUniqueIPAddresses()}");
+            Console.WriteLine();
+
+            Console.WriteLine($"Top 3 most visited URLs: {string.Join(", ", reporter.GetTopThreeUrls())}");
+            Console.WriteLine();
+
+            Console.WriteLine($"Top 3 most active IP addresses: {string.Join(", ", reporter.GetTopThreeIPAddresses())}");
         }
     }
 }
