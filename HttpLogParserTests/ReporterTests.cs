@@ -11,15 +11,15 @@ namespace HttpLogParserTests
         [Fact]
         public void CountUniqueIPAddresses_ShouldCountIPAddressWithOneRequestOnce()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" },
-                new LogEntry { IPAddress = "192.168.0.3" },
-                new LogEntry { IPAddress = "192.168.0.4" }
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.3" },
+                new Request { IPAddress = "192.168.0.4" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
             var reporter = new Reporter(log);
 
             var result = reporter.CountUniqueIPAddresses();
@@ -30,15 +30,15 @@ namespace HttpLogParserTests
         [Fact]
         public void CountUniqueIPAddresses_ShouldCountIPAddressWithMultipleRequestsOnce()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" },
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" }
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
             var reporter = new Reporter(log);
 
             var result = reporter.CountUniqueIPAddresses();
@@ -49,19 +49,19 @@ namespace HttpLogParserTests
         [Fact]
         public void GetTopThreeUrls_ShouldReturnThreeUrlsWithMostRequests()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { Url = "/index" },
-                new LogEntry { Url = "/admin" },
-                new LogEntry { Url = "/news" },
-                new LogEntry { Url = "/contact-us" },
-                new LogEntry { Url = "/index" },
-                new LogEntry { Url = "/admin" },
-                new LogEntry { Url = "/news" },
-                new LogEntry { Url = "/news" }
+                new Request { Url = "/index" },
+                new Request { Url = "/admin" },
+                new Request { Url = "/news" },
+                new Request { Url = "/contact-us" },
+                new Request { Url = "/index" },
+                new Request { Url = "/admin" },
+                new Request { Url = "/news" },
+                new Request { Url = "/news" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
             var reporter = new Reporter(log);
 
             var result = reporter.GetTopThreeUrls();
@@ -75,19 +75,19 @@ namespace HttpLogParserTests
         [Fact]
         public void GetTopThreeIPAddressess_ShouldReturnThreeIPsWithMostRequests()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" },
-                new LogEntry { IPAddress = "192.168.0.3" },
-                new LogEntry { IPAddress = "192.168.0.4" },
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" },
-                new LogEntry { IPAddress = "192.168.0.3" },
-                new LogEntry { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.3" },
+                new Request { IPAddress = "192.168.0.4" },
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.3" },
+                new Request { IPAddress = "192.168.0.2" },
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
             var reporter = new Reporter(log);
 
             var result = reporter.GetTopThreeIPAddresses();

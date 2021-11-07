@@ -10,15 +10,15 @@ namespace HttpLogParserTests
         [Fact]
         public void CountRequestsByIPAddress_ShouldCountOneRequestPerIP()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" },
-                new LogEntry { IPAddress = "192.168.0.3" },
-                new LogEntry { IPAddress = "192.168.0.4" }
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.3" },
+                new Request { IPAddress = "192.168.0.4" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
 
             var result = log.CountRequestsByIPAddress();
 
@@ -32,15 +32,15 @@ namespace HttpLogParserTests
         [Fact]
         public void CountRequestsByIPAddress_ShouldCountMultipleRequestsPerIP()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { IPAddress = "192.168.0.1" },
-                new LogEntry { IPAddress = "192.168.0.2" },
-                new LogEntry { IPAddress = "192.168.0.3" },
-                new LogEntry { IPAddress = "192.168.0.1" }
+                new Request { IPAddress = "192.168.0.1" },
+                new Request { IPAddress = "192.168.0.2" },
+                new Request { IPAddress = "192.168.0.3" },
+                new Request { IPAddress = "192.168.0.1" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
 
             var result = log.CountRequestsByIPAddress();
 
@@ -53,15 +53,15 @@ namespace HttpLogParserTests
         [Fact]
         public void CountRequestsByUrl_ShouldCountOneRequestPerUrl()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { Url = "/index" },
-                new LogEntry { Url = "/admin" },
-                new LogEntry { Url = "/news" },
-                new LogEntry { Url = "/contact-us" }
+                new Request { Url = "/index" },
+                new Request { Url = "/admin" },
+                new Request { Url = "/news" },
+                new Request { Url = "/contact-us" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
 
             var result = log.CountRequestsByUrl();
 
@@ -75,15 +75,15 @@ namespace HttpLogParserTests
         [Fact]
         public void CountRequestsByUrl_ShouldCountMultipleRequestsPerUrl()
         {
-            var logEntries = new List<LogEntry>
+            var requests = new List<Request>
             {
-                new LogEntry { Url = "/index" },
-                new LogEntry { Url = "/admin" },
-                new LogEntry { Url = "/news" },
-                new LogEntry { Url = "/admin" }
+                new Request { Url = "/index" },
+                new Request { Url = "/admin" },
+                new Request { Url = "/news" },
+                new Request { Url = "/admin" }
             };
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
 
             var result = log.CountRequestsByUrl();
 

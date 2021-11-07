@@ -15,14 +15,14 @@ namespace HttpLogParser
 
             var logLines = await ReadLogFileLines(filePath);
 
-            var logEntries = new List<LogEntry>();
+            var requests = new List<Request>();
 
             foreach (var line in logLines)
             {
-                logEntries.Add(LogEntryParser.Parse(line));
+                requests.Add(RequestParser.Parse(line));
             }
 
-            var log = new Log(logEntries);
+            var log = new Log(requests);
             WriteReport(log);
         }
 

@@ -5,28 +5,28 @@ namespace HttpLogParser
 {
     public class Log
     {
-        private readonly IEnumerable<LogEntry> _logEntries;
+        private readonly IEnumerable<Request> _requests;
 
-        public Log(IEnumerable<LogEntry> logEntries)
-        {            
-            _logEntries = logEntries ?? throw new ArgumentNullException(nameof(logEntries));
+        public Log(IEnumerable<Request> requests)
+        {
+            _requests = requests ?? throw new ArgumentNullException(nameof(requests));
         }
 
         public Dictionary<string, int> CountRequestsByIPAddress()
         {
             var requestsByIPAddress = new Dictionary<string, int>();
 
-            foreach (var entry in _logEntries)
+            foreach (var request in _requests)
             {
-                if (requestsByIPAddress.ContainsKey(entry.IPAddress))
+                if (requestsByIPAddress.ContainsKey(request.IPAddress))
                 {
                     // This IP address has had a request before
-                    requestsByIPAddress[entry.IPAddress] ++;
+                    requestsByIPAddress[request.IPAddress] ++;
                 }
                 else
                 {
                     // First request for this IP address
-                    requestsByIPAddress.Add(entry.IPAddress, 1);
+                    requestsByIPAddress.Add(request.IPAddress, 1);
                 }
             }
 
@@ -37,17 +37,17 @@ namespace HttpLogParser
         {
             var requestsByUrl = new Dictionary<string, int>();
 
-            foreach (var entry in _logEntries)
+            foreach (var request in _requests)
             {
-                if (requestsByUrl.ContainsKey(entry.Url))
+                if (requestsByUrl.ContainsKey(request.Url))
                 {
                     // This URL has had a request before
-                    requestsByUrl[entry.Url]++;
+                    requestsByUrl[request.Url]++;
                 }
                 else
                 {
                     // First request for this URL
-                    requestsByUrl.Add(entry.Url, 1);
+                    requestsByUrl.Add(request.Url, 1);
                 }
             }
 
